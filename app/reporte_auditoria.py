@@ -42,15 +42,15 @@ def buscar_reportes_cliente(nombre_cliente, ruta_db=RUTA_DB):
 
 def convertir_a_pdf(nombre_archivo):
     """Convierte un archivo HTML válido a PDF sin invocar la shell."""
-    if not NOMBRE_HTML_VALIDO.match(Path(nombre_archivo).name):
+    nombre_limpio = Path(nombre_archivo).name
+    if not NOMBRE_HTML_VALIDO.match(nombre_limpio):
         raise ValueError("Nombre de archivo no válido")
-    salida = nombre_archivo + ".pdf"
+    salida = nombre_limpio + ".pdf"
     try:
-        subprocess.run(["wkhtmltopdf", nombre_archivo, salida], check=False)
+        subprocess.run(["wkhtmltopdf", "--", nombre_limpio, salida], check=False)
     except FileNotFoundError:
         print("Aviso: wkhtmltopdf no está instalado; no se generó el PDF.")
     return salida
-
 
 def hash_password_legacy(password):
     """Genera un hash seguro con sal aleatoria usando PBKDF2-HMAC-SHA256."""
