@@ -59,7 +59,10 @@ te dice eso sobre depender de una sola herramienta?
 
 | Paquete | Versión | ¿Directa o transitiva? (usa `# via`) | CVE / GHSA | Severidad | Corregida en | ¿Explotable en ReportAudit? ¿Por qué? | Decisión |
 |---|---|---|---|---|---|---|---|
-|  |  |  |  |  |  |  |  |
+| `werkzeug` | 3.0.1 | Transitiva (`# via flask`) | GHSA-2g68-c3qc-8985 | High | 3.0.3 | **Sí/Posible.** Es una vulnerabilidad de DoS al procesar peticiones web. Flask usa Werkzeug para recibir el tráfico. | Actualizar con el PR de Dependabot. |
+| `jinja2` | 3.1.2 | Transitiva (`# via flask`) | GHSA-h75v-3vvj-5mfj | Medium | 3.1.4 | **No.** Afecta al motor de plantillas HTML. ReportAudit es una API que devuelve JSON, no renderiza plantillas. | Actualizar y documentar con VEX. |
+| `flask` | 3.0.0 | Directa (`requirements.in`) | GHSA-68rp-wp8r-4726 | Low | 3.1.3 | **Poco probable.** Es de severidad baja, pero al ser el núcleo de la API web conviene mantenerla limpia. | Actualizar con el PR de Dependabot. |
+| `pip` | 24.0 | Transitiva (Entorno) | GHSA-wf93-45jw-7689 | Medium | 26.1.2 | **No.** Pip solo instala cosas en el entorno virtual, no forma parte del código que corre en producción. | Ignorar / Riesgo aceptado. |
 
 **Comparación con Dependabot** (Parte H): ¿las alertas coinciden con Grype? Explica
 cualquier diferencia.
@@ -97,3 +100,19 @@ justificación.
 10.
 11.
 12.
+
+## Backlog del laboratorio (Issues)
+
+| Issue | Título | PR o evidencia de cierre |
+|---|---|---|
+| #1 | Adopt an international pull request template | |
+| #2 | Run SAST (SonarQube Cloud and CodeQL) on every pull request | |
+| #3 | Block insecure commits with a Semgrep pre-commit hook | |
+| #4 | Enable Dependabot alerts and security updates | |
+| #5 | Remediate the findings of the security audit | |
+| #6 | Upgrade the vulnerable dependencies | |
+| #7 | Publish the audit log and the before/after evidence | |
+| #8 | Detect ReportAudit credentials in the whole Git history | |
+| #9 | Make SCA and secret scanning required checks on main | |
+| #10 | Publish a security policy and a private vulnerability reporting channel | |
+| #11 | Release v1.0.0 with an SBOM and signed provenance | |
