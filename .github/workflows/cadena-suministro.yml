@@ -51,7 +51,7 @@ jobs:
           category: "/language:python"
 
 
-sca-pip-audit:
+  sca-pip-audit:
     name: SCA - pip-audit
     runs-on: ubuntu-latest
     steps:
